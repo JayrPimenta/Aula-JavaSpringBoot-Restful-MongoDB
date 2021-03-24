@@ -1,6 +1,7 @@
 package com.javawsnosql.mongodbaula.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javawsnosql.mongodbaula.domain.Usuario;
+import com.javawsnosql.mongodbaula.dto.UsuarioDTO;
 import com.javawsnosql.mongodbaula.services.UsuarioService;
 
 @RestController
@@ -19,9 +21,10 @@ public class UsuarioResource {
 	private UsuarioService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Usuario>> findAll(){
+	public ResponseEntity<List<UsuarioDTO>> findAll(){
 		List<Usuario> listaDeUsuarios = service.findAll();	
-		return ResponseEntity.ok().body(listaDeUsuarios);	
+		List<UsuarioDTO> listaDeUsuariosDto = listaDeUsuarios.stream().map(user -> new UsuarioDTO(user)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listaDeUsuariosDto);	
 	}
 	
 }
