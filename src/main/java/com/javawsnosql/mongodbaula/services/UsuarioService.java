@@ -34,9 +34,28 @@ public class UsuarioService {
 		return repository.insert(usuario);
 	}
 	
-	public Usuario fromDTO(UsuarioDTO usuarioDTO) {
-		return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail());
+	public void delete(String id) {
+		findById(id); // Verifica o id informado tem correspondencia no DB (Reuso da exceção)
+		repository.deleteById(id);
+	}
+	
+	public Usuario update(Usuario usuario) {
+		Usuario usuarioAtualizado = findById(usuario.getId());
+		updateData(usuarioAtualizado, usuario);
+		return repository.save(usuarioAtualizado);
 		
 	}
+	
+	private void updateData(Usuario usuarioAtualizado, Usuario usuario) {
+		usuarioAtualizado.setNome(usuario.getNome());
+		usuarioAtualizado.setEmail(usuario.getEmail());	
+	}
+
+	public Usuario fromDTO(UsuarioDTO usuarioDTO) {
+		return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail());
+	}
+	
+	
+	
 	
 }
