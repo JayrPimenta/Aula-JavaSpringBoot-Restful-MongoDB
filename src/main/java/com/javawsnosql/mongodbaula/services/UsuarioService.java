@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javawsnosql.mongodbaula.domain.Usuario;
+import com.javawsnosql.mongodbaula.dto.UsuarioDTO;
 import com.javawsnosql.mongodbaula.repositories.UsuarioRepository;
 import com.javawsnosql.mongodbaula.services.exception.ObjectNotFoundException;
 
@@ -27,6 +28,15 @@ public class UsuarioService {
 		} catch (NoSuchElementException e) {
 			throw new ObjectNotFoundException("Objeto não encontrado");
 		}
+	}
+	
+	public Usuario insert(Usuario usuario) {
+		return repository.insert(usuario);
+	}
+	
+	public Usuario fromDTO(UsuarioDTO usuarioDTO) {
+		return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail());
+		
 	}
 	
 }
