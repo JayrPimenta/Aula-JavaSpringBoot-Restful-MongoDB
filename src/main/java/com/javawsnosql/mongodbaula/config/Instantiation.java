@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.javawsnosql.mongodbaula.domain.Post;
 import com.javawsnosql.mongodbaula.domain.Usuario;
+import com.javawsnosql.mongodbaula.dto.AutorDTO;
 import com.javawsnosql.mongodbaula.repositories.PostRepository;
 import com.javawsnosql.mongodbaula.repositories.UsuarioRepository;
 
@@ -36,11 +37,13 @@ public class Instantiation implements CommandLineRunner{
 		Usuario carla = new Usuario(null, "Carla Lopes Rodrigues", "carla.rog@outlook.com");
 		Usuario david = new Usuario(null, "David Santanna", "sant.david@uol.com.br");
 		
-		Post post1 = new Post(null, sdf.parse("23/03/2018"), "Partiu viagem!", "Vou viajar para São Paulo. Abraços!", bianca);
-		Post post2 = new Post(null, sdf.parse("11/09/2019"), "Bom dia", "Chalé e chocolate quente, dia feliz!", bianca);
-		Post post3 = new Post(null, sdf.parse("09/12/2019"), "Sol", "Hoje vai dar praia. Dia de pescaria ;)", carla);
-		
 		usuarioRepository.saveAll(Arrays.asList(alex, bianca, carla, david));
+		
+		Post post1 = new Post(null, sdf.parse("23/03/2018"), "Partiu viagem!", "Vou viajar para São Paulo. Abraços!", new AutorDTO(bianca));
+		Post post2 = new Post(null, sdf.parse("11/09/2019"), "Bom dia", "Chalé e chocolate quente, dia feliz!", new AutorDTO(bianca));
+		Post post3 = new Post(null, sdf.parse("09/12/2019"), "Sol", "Hoje vai dar praia. Dia de pescaria ;)", new AutorDTO(carla));
+		
+		
 		postRepository.saveAll(Arrays.asList(post1, post2, post3));
 	}
 
