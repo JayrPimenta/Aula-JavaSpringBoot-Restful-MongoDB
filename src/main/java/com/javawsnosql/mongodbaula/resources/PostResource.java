@@ -1,5 +1,6 @@
 package com.javawsnosql.mongodbaula.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,25 @@ public class PostResource {
 	}
 	
 	@RequestMapping(value="/buscartitulo", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByTitulo(@RequestParam(value="texto") String texto){
+	public ResponseEntity<List<Post>> findByTitulo(@RequestParam(value="texto", defaultValue="") String texto){
 		texto = URL.urlDecoder(texto);
 		List<Post> listaDePosts = service.findByTitulo(texto);
 		return ResponseEntity.ok().body(listaDePosts);	
 	}
 	
 	@RequestMapping(value="/buscarconteudo", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findByConteudo(@RequestParam(value="texto") String texto){
+	public ResponseEntity<List<Post>> findByConteudo(@RequestParam(value="texto", defaultValue="") String texto){
 		texto = URL.urlDecoder(texto);
 		List<Post> listaDePosts = service.findByConteudo(texto);
+		return ResponseEntity.ok().body(listaDePosts);	
+	}
+	
+	@RequestMapping(value="/buscacompleta", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> buscarEmTudo(@RequestParam(value="texto", defaultValue="") String texto, @RequestParam(value="minData", defaultValue="") String minData, @RequestParam(value="maxData", defaultValue="") String maxData){
+		texto = URL.urlDecoder(texto);
+		Date minima = URL.conversorDeData(minData, new Date(0L));
+		Date maxima = URL.conversorDeData(maxData, new Date());
+		List<Post> listaDePosts = service.buscarEmTudo(texto, minima, maxima);
 		return ResponseEntity.ok().body(listaDePosts);	
 	}
 }
