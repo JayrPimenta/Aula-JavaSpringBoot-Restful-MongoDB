@@ -1,12 +1,15 @@
 package com.javawsnosql.mongodbaula.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.javawsnosql.mongodbaula.dto.AutorDTO;
+import com.javawsnosql.mongodbaula.dto.ComentarioDTO;
 
 @Document
 public class Post implements Serializable{
@@ -18,6 +21,8 @@ public class Post implements Serializable{
 	private String titulo;
 	private String conteudo;
 	private AutorDTO autor;
+	
+	private List<ComentarioDTO> comentarioas = new ArrayList<>();
 	
 	public Post() {
 	}
@@ -68,6 +73,14 @@ public class Post implements Serializable{
 
 	public void setAutor(AutorDTO autor) {
 		this.autor = autor;
+	}
+
+	public List<ComentarioDTO> getComentarioas() {
+		return comentarioas;
+	}
+
+	public void setComentarioas(List<ComentarioDTO> comentarioas) {
+		this.comentarioas = comentarioas;
 	}
 
 	@Override
