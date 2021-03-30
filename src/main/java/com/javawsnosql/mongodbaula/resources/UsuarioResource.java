@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.javawsnosql.mongodbaula.domain.Post;
 import com.javawsnosql.mongodbaula.domain.Usuario;
 import com.javawsnosql.mongodbaula.dto.UsuarioDTO;
 import com.javawsnosql.mongodbaula.services.UsuarioService;
@@ -57,6 +58,12 @@ public class UsuarioResource {
 		usuario.setId(id);
 		usuario = service.update(usuario);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}/posts", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+		Usuario usuario = service.findById(id);
+		return ResponseEntity.ok().body(usuario.getPosts());	
 	}
 	
 }
