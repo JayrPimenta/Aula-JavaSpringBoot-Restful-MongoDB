@@ -33,4 +33,11 @@ public class PostResource {
 		List<Post> listaDePosts = service.findByTitulo(texto);
 		return ResponseEntity.ok().body(listaDePosts);	
 	}
+	
+	@RequestMapping(value="/buscarconteudo", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> findByConteudo(@RequestParam(value="texto") String texto){
+		texto = URL.urlDecoder(texto);
+		List<Post> listaDePosts = service.findByConteudo(texto);
+		return ResponseEntity.ok().body(listaDePosts);	
+	}
 }
